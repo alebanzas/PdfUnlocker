@@ -16,6 +16,9 @@ namespace PdfUnlocker
             //{
             //    Console.WriteLine(printerName);
             //}
+            //Console.ReadLine();
+            //return;
+
 
             Console.WriteLine("Path to files:");
             string originalFolder = Console.ReadLine();
@@ -51,11 +54,12 @@ namespace PdfUnlocker
                                 string.Join(".", new[] { GetUnlockedFileName(filename), "pdf" }));
 
             int ok = 0;
-            while (ok < 100)
+            while (ok < 360)
             {
-                while (!File.Exists(sourceFileName))
+                while (!File.Exists(sourceFileName) && ok < 360)
                 {
                     Thread.Sleep(1000);
+                    ok++;
                 }
                 try
                 {
@@ -82,8 +86,7 @@ namespace PdfUnlocker
         {
             // Absolute path to your PDF to print (with filename)
             string Filepath = Path.Combine(path, filename);
-            string PrinterName = "Microsoft Print to PDF";
-
+            string PrinterName = "PDFCreator";
             IPrinter printer = new Printer();
             printer.PrintRawFile(PrinterName, Filepath, GetUnlockedFileName(filename));
         }
